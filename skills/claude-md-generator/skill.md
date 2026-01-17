@@ -235,3 +235,161 @@ digraph claude_md_generator {
 
 包含了开发环境配置和常用命令（dev、test、build、lint）。你可以随时修改或要求重新生成。
 ```
+
+## 内容模板库
+
+### 基础结构（所有场景）
+
+```markdown
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+## 项目概述
+[1-2句话描述项目目标]
+```
+
+### 编程项目模板
+
+```markdown
+## 开发环境
+- 技术栈: [从实际依赖提取]
+- 包管理器: [npm/yarn/pnpm/pip/cargo]
+
+## 常用命令
+[从 package.json scripts 或实际文件提取]
+- 安装依赖: `[实际命令]`
+- 开发模式: `[实际命令]`
+- 运行测试: `[实际命令]`
+- 构建项目: `[实际命令]`
+
+## 架构说明
+[仅在用户明确需要时添加]
+```
+
+**模板使用规则**:
+- 从 package.json 的 `scripts` 字段提取命令
+- 如果没有某个 script，不添加该行
+- 技术栈从 `dependencies` 提取主要框架
+- 空项目使用"待初始化"标注
+
+### 数据分析项目模板
+
+```markdown
+## 分析环境
+- 分析工具: [基于用户选择]
+- 主要依赖: [从 requirements.txt 提取]
+
+## 数据位置
+- 原始数据: `data/raw/`
+- 处理后数据: `data/processed/`
+- 分析结果: `output/`
+
+## 常用命令
+- 安装依赖: `pip install -r requirements.txt`
+- 启动 Jupyter: `jupyter notebook`
+- 运行分析脚本: `python scripts/analyze.py`
+
+## 分析流程
+数据获取 → 清洗 → 分析 → 可视化 → 报告
+```
+
+### 市场调研模板
+
+```markdown
+## 调研目标
+[基于用户描述的1句话]
+
+## 信息来源
+- 竞品网站: [用户提供或标注"待补充"]
+- 行业报告: [用户提供或标注"待补充"]
+
+## 分析框架
+[用户选择的框架: SWOT/波特五力/用户画像]
+
+## 输出规范
+- 报告格式: Markdown
+- 存放位置: `reports/`
+- 命名规范: YYYY-MM-DD-主题
+```
+
+### 内容创作模板
+
+```markdown
+## 内容类型
+[基于用户选择]
+
+## 品牌调性
+[用户选择的调性]
+
+## 内容规范
+- 目标受众: [基于用户描述]
+- 核心信息: [用户要传达的内容]
+
+## 素材管理
+- 图片库: `assets/images/`
+- 参考资料: `references/`
+- 模板: `templates/`
+
+## 发布流程
+创作 → 审阅 → 编辑 → 发布
+```
+
+## 边界情况处理
+
+### 已存在 CLAUDE.md
+
+使用 `Glob` 检查是否存在 CLAUDE.md：
+```bash
+if [ -f "CLAUDE.md" ]; then
+  # 询问用户是否覆盖
+fi
+```
+
+提示用户：
+```
+检测到已存在 CLAUDE.md 文件。是否要覆盖？
+- 覆盖：删除现有文件，生成新的
+- 取消：保留现有文件，不生成
+```
+
+### 空项目
+
+如果扫描发现目录为空：
+- 仍然生成 CLAUDE.md
+- 在相关章节标注"待初始化"
+- 提供通用命令格式（不是具体命令）
+
+示例：
+```markdown
+## 常用命令
+待项目初始化后添加具体命令
+```
+
+### 混合项目（全栈）
+
+如果检测到前后端都存在（如 package.json + requirements.txt）：
+- 合并两个模板的相关部分
+- 分别列出前端和后端命令
+- 使用子标题区分
+
+示例：
+```markdown
+## 开发环境
+
+### 前端
+- 技术栈: React
+- 包管理器: npm
+
+### 后端
+- 技术栈: Python Flask
+- 包管理器: pip
+
+## 常用命令
+
+### 前端
+- 开发: `npm run dev`
+
+### 后端
+- 启动: `python app.py`
+```

@@ -393,3 +393,135 @@ fi
 ### 后端
 - 启动: `python app.py`
 ```
+
+## 常见错误
+
+### ❌ 错误 1: 编造命令
+
+**问题**: 添加了项目中不存在的命令
+```markdown
+## 常用命令
+- 运行测试: `npm test`  # 但 package.json 中没有 test script
+```
+
+**解决**: 只包含实际存在的 scripts
+```markdown
+## 常用命令
+- 开发模式: `npm run dev`
+- 构建项目: `npm run build`
+# 没有 test script，就不添加
+```
+
+### ❌ 错误 2: 包含通用建议
+
+**问题**: 添加了与项目无关的通用内容
+```markdown
+## 开发规范
+- 写清晰的注释
+- 遵循代码规范
+- 做好单元测试
+```
+
+**解决**: 不添加这些通用内容，保持精简
+
+### ❌ 错误 3: 过度详细
+
+**问题**: 列出所有文件结构和每个组件
+```markdown
+## 项目结构
+- src/
+  - components/
+    - Button.tsx
+    - Input.tsx
+    - ...（50个文件）
+```
+
+**解决**: 只包含"需要多文件才能理解的"架构信息
+
+### ❌ 错误 4: 重复生成
+
+**问题**: 为已有完善 CLAUDE.md 的项目重新生成
+
+**解决**: 先检查是否存在，询问用户是否覆盖
+
+## 完整示例
+
+### 示例 1: React 项目
+
+**用户输入**: "我要开发一个 React 管理后台，主要做增删改查功能，请生成 CLAUDE.md"
+
+**步骤 1: 扫描项目**
+```bash
+# 找到 package.json
+# 读取内容，发现:
+# - scripts: dev, build, test, lint
+# - dependencies: react, react-dom, antd
+```
+
+**步骤 2: 提问**
+使用 AskUserQuestion 询问：
+1. 项目类型：前端应用
+2. 开发任务：新功能开发、测试编写
+
+**步骤 3: 生成 CLAUDE.md**
+```markdown
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+## 项目概述
+React 管理后台，用于用户和产品的增删改查功能。
+
+## 开发环境
+- 技术栈: React 18, Ant Design
+- 包管理器: npm
+
+## 常用命令
+- 安装依赖: `npm install`
+- 开发模式: `npm run dev`
+- 运行测试: `npm test`
+- 构建项目: `npm run build`
+- 代码检查: `npm run lint`
+```
+
+### 示例 2: 数据分析项目（空目录）
+
+**用户输入**: "我要用 Python 分析销售数据，做可视化报表"
+
+**步骤 1: 扫描项目**
+```bash
+# 空目录，没有文件
+```
+
+**步骤 2: 提问**
+1. 分析工具：Python (pandas/numpy), Jupyter Notebook
+2. 数据位置：本地文件
+
+**步骤 3: 生成 CLAUDE.md**
+```markdown
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+## 项目概述
+使用 Python 进行销售数据分析和可视化报表生成。
+
+## 分析环境
+- 分析工具: Python (pandas, numpy, matplotlib), Jupyter Notebook
+- 主要依赖: 待创建 requirements.txt
+
+## 数据位置
+- 原始数据: `data/raw/`
+- 处理后数据: `data/processed/`
+- 分析结果: `output/`
+
+## 常用命令
+待项目初始化后添加具体命令。
+
+建议命令:
+- 安装依赖: `pip install -r requirements.txt`
+- 启动 Jupyter: `jupyter notebook`
+
+## 分析流程
+数据获取 → 清洗 → 分析 → 可视化 → 报告
+```

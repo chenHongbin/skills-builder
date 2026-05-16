@@ -111,6 +111,32 @@ mkdir -p ~/Desktop/录音分析/<销售姓名>/
 
 ## 阶段 1：音频转写
 
+### 前置依赖检查（首次使用时）
+
+在开始转写前，先检查必需工具是否已安装：
+
+```bash
+# 检查 ffmpeg
+which ffmpeg > /dev/null 2>&1 && echo "✅ ffmpeg 已安装" || echo "❌ 请安装 ffmpeg：brew install ffmpeg"
+
+# 检查 whisper（动态查找路径）
+WHISPER=$(which whisper 2>/dev/null || find ~/Library/Python -name "whisper" -type f 2>/dev/null | head -1)
+if [ -n "$WHISPER" ]; then
+  echo "✅ whisper 已安装：$WHISPER"
+else
+  echo "❌ 请安装 whisper：pip3 install openai-whisper"
+fi
+```
+
+**如果工具未安装，暂停并指导用户安装：**
+
+| 工具 | 安装命令 | 说明 |
+|------|---------|------|
+| ffmpeg | `brew install ffmpeg` | macOS。Linux：`apt-get install ffmpeg` |
+| openai-whisper | `pip3 install openai-whisper` | 本地转写，数据不外传 |
+
+安装完成后继续。**不要跳过依赖检查**——没有这些工具无法完成转写。
+
 ### 1.1 格式转换
 
 Whisper 对 wav 格式效果最好。先转换格式：
@@ -125,10 +151,13 @@ ffmpeg -i "<录音路径>" -ar 16000 -ac 1 "/tmp/recording.wav" -y
 
 ### 1.2 Whisper 本地转写
 
-使用 OpenAI Whisper CLI（已验证安装在 `/Users/robertchen/Library/Python/3.9/bin/whisper`）：
+使用 OpenAI Whisper 在本地转写（数据不出电脑）：
 
 ```bash
-/Users/robertchen/Library/Python/3.9/bin/whisper \
+# 动态查找 whisper 路径
+WHISPER=$(which whisper 2>/dev/null || find ~/Library/Python -name "whisper" -type f 2>/dev/null | head -1)
+
+$WHISPER \
   "/tmp/recording.wav" \
   --model medium \
   --language zh \

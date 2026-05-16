@@ -7,6 +7,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 这是一个 Skills 构建器项目，用于创建和管理 Claude Code 技能。
 
 当前包含的 skill：
+- **book-mirror**: 书籍镜子——逐章个性化分析，左栏作者，右栏你
 - **claude-md-generator**: 通过对话为各类项目生成定制化 CLAUDE.md 文件
 
 ## Skill 开发
@@ -21,7 +22,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ```
 Skills构建器/
 ├── skills/                          # Skill 源码（版本控制）
-│   └── claude-md-generator/
+│   ├── book-mirror/                 # 书籍镜子 skill
+│   │   ├── skill.md                 # Skill 文档
+│   │   └── scripts/                 # 配套脚本
+│   │       ├── extract_epub.py      # EPUB 文本提取
+│   │       └── detect_chapters.py   # 章节边界检测
 │       └── skill.md                 # Skill 文档
 ├── tests/                           # 测试相关
 │   ├── scenarios/                   # 测试场景
@@ -68,8 +73,8 @@ cat tests/final-validation.md
 
 ### Skill 位置
 
-- **开发版本**: `skills/claude-md-generator/` （版本控制）
-- **部署位置**: `~/.claude/skills/claude-md-generator/` （实际使用）
+- **开发版本**: `skills/book-mirror/`, `skills/claude-md-generator/`（版本控制）
+- **部署位置**: `~/.claude/skills/book-mirror/`, `~/.claude/skills/claude-md-generator/`（实际使用）
 - **测试场景**: `tests/scenarios/`
 - **测试结果**: `tests/results/`
 

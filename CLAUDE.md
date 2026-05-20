@@ -9,6 +9,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 当前包含的 skill：
 - **book-mirror**: 书籍镜子——逐章个性化分析，左栏作者，右栏你
 - **claude-md-generator**: 通过对话为各类项目生成定制化 CLAUDE.md 文件
+- **kuaishangton-recording-analysis**: 快商通电销录音分析——输入录音生成8大版块专业报告（垂直版）
+- **sales-recording-insight**: 电销录音管理教练——通用版录音分析、话术评分、管理洞察和团队复盘
 
 ## Skill 开发
 
@@ -27,6 +29,14 @@ Skills构建器/
 │   │   └── scripts/                 # 配套脚本
 │   │       ├── extract_epub.py      # EPUB 文本提取
 │   │       └── detect_chapters.py   # 章节边界检测
+│   ├── kuaishangton-recording-analysis/  # 快商通录音分析（垂直版）
+│   │   ├── skill.md
+│   │   └── scripts/
+│   │       └── generate_report.py   # Word报告生成
+│   ├── sales-recording-insight/     # 电销录音管理教练（通用版）
+│   │   ├── skill.md
+│   │   └── scripts/
+│   │       └── generate_report.py   # Word报告生成
 │       └── skill.md                 # Skill 文档
 ├── tests/                           # 测试相关
 │   ├── scenarios/                   # 测试场景
@@ -73,8 +83,8 @@ cat tests/final-validation.md
 
 ### Skill 位置
 
-- **开发版本**: `skills/book-mirror/`, `skills/claude-md-generator/`（版本控制）
-- **部署位置**: `~/.claude/skills/book-mirror/`, `~/.claude/skills/claude-md-generator/`（实际使用）
+- **开发版本**: `skills/` 下的各个目录（版本控制）
+- **部署位置**: `~/.claude/skills/` 下的对应目录（实际使用）
 - **测试场景**: `tests/scenarios/`
 - **测试结果**: `tests/results/`
 
